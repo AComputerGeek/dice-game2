@@ -33,15 +33,16 @@ p2FinalScore.innerHTML   = MIN_SCORE;
 p1CurrentScore.innerHTML = MIN_SCORE;
 p2CurrentScore.innerHTML = MIN_SCORE;
 
-// Hiding a dice image in the beginning
+// Hiding the dice face image in the beginning of the game
 diceImg.classList.add("hidden");
 
 // Roll Event
 btnRoll.addEventListener("click", function(event) {
 
     // Creating a random number between 1 and 6
-    let currentRoll = Math.round(Math.random() * 5) + 1;
+    const currentRoll = Math.round(Math.random() * 5) + 1;
 
+    // Showing a dice face image based on the random number which is just created
     diceImg.classList.remove("hidden");
     diceImg.setAttribute("src", `./images/dice-${currentRoll}.png`);
 
@@ -79,6 +80,7 @@ btnRoll.addEventListener("click", function(event) {
 // Hold Event
 btnHold.addEventListener("click", function(event) {
 
+    // Hiding the dice face image
     diceImg.classList.add("hidden");
 
     if(p1.classList.contains("player--active"))
@@ -92,11 +94,21 @@ btnHold.addEventListener("click", function(event) {
         p2CurrentScore.innerHTML = MIN_SCORE;
     }
 
+    /* 
+    Checking the final score; 
+    if the final score is equal or greater than 100, then that player is the winner, and game is be over;
+    otherwise, player will be changed, and game is continuing.
+    */
     if(Number(p1FinalScore.innerHTML) >= MAX_SCORE || Number(p2FinalScore.innerHTML) >= MAX_SCORE)
     {
+        // If player won the game, then hide the dice face image
+        diceImg.classList.add("hidden");
+
+        // If player won the game, then disable the Roll and Hold buttons
         btnRoll.disabled = true;
         btnHold.disabled = true;
 
+        // Changing winner's background color
         (Number(p1FinalScore.innerHTML) >= MAX_SCORE) ? p1.classList.add("winner") : p2.classList.add("winner");
     }
     else
@@ -107,7 +119,7 @@ btnHold.addEventListener("click", function(event) {
 });
 
 
-// New Game Event
+// New Game Event (Reset the game)
 btnNew.addEventListener("click", function(event) {
 
     diceImg.classList.add("hidden");
